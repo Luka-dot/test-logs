@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import M from "materialize-css/dist/js/materialize.min.js";
 
-const AddLogModal = () => {
+const EditLogModal = () => {
     const [message, setMessage] = useState('')
     const [attention, setAttention] = useState(false)
     const [tech, setTech] = useState('')
@@ -11,6 +11,7 @@ const AddLogModal = () => {
             M.toast({ html: 'tech name and message can not be blank'})
         } else {
             console.log(message, tech)
+
             setMessage('')
             setTech('')
             setAttention(false)
@@ -18,7 +19,7 @@ const AddLogModal = () => {
     }
 
     return (
-        <div id="add-log-modal" className="modal" style={modalStyle}>
+        <div id="edit-log-modal" className="modal" style={modalStyle}>
             <div className="modal-content">
                 <h4>Enter System Log</h4>
                 <div className="row">
@@ -61,4 +62,4 @@ const modalStyle = {
     height: '75%'
 }
 
-export default AddLogModal
+export default EditLogModal
