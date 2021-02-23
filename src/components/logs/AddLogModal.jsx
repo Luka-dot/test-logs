@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import M from "materialize-css/dist/js/materialize.min.js";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { addLog } from '../actions/LogActions.js';
 
-const AddLogModal = () => {
+const AddLogModal = ({ addLog }) => {
     const [message, setMessage] = useState('')
     const [attention, setAttention] = useState(false)
     const [tech, setTech] = useState('')
@@ -10,7 +13,16 @@ const AddLogModal = () => {
         if (message === '' || tech === '') {
             M.toast({ html: 'tech name and message can not be blank'})
         } else {
-            console.log(message, tech)
+            const newLog = {
+                message,
+                attention,
+                tech,
+                date: new Date()
+            }
+
+            addLog(newLog)
+            M.toast({ html: `Log added by ${tech}`})
+            // clear fields
             setMessage('')
             setTech('')
             setAttention(false)
@@ -32,9 +44,9 @@ const AddLogModal = () => {
                         <select name="tech" value={tech} className="browser-default" onChange={(e) => setTech(e.target.value)}>
                             <option value="" disabled>Select Technitian</option>
                             <option value="John Doe">John Doe</option>
-                            <option value="Tom IvDoe">John Doe</option>
-                            <option value="Alice Hanson">John Doe</option>
-                            <option value="Mark Murshmallow">John Doe</option>
+                            <option value="Tom IvDoe">Tom IvDoe</option>
+                            <option value="Alice Hanson">Alice Hanson</option>
+                            <option value="Mark Murshmallow">Mark Murshmallow"</option>
                         </select>
                     </div>
                 </div>
@@ -56,9 +68,13 @@ const AddLogModal = () => {
     )
 }
 
+AddLogModal.propTypes = {
+    addLog: PropTypes.func.isRequired
+}
+
 const modalStyle = {
     width: '75%',
     height: '75%'
 }
 
-export default AddLogModal
+export default connect(null, { addLog })(AddLogModal);
