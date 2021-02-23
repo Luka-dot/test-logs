@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import M from "materialize-css/dist/js/materialize.min.js";
+import { connect } from 'react-redux';
+import { addTech } from '../actions/TechActions.js';
 
-const AddTechModal = () => {
+const AddTechModal = ({ addTech }) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
 
@@ -9,7 +11,11 @@ const AddTechModal = () => {
         if (firstName === '' || lastName === '') {
             M.toast({ html: 'Names can not be blank'})
         } else {
-            console.log(firstName, lastName)
+            const newTechToAdd = {
+                firstName,
+                lastName
+            }
+            addTech(newTechToAdd)
             setFirstName('')
             setLastName('')
         }
@@ -39,4 +45,4 @@ const AddTechModal = () => {
     )
 }
 
-export default AddTechModal
+export default connect(null, { addTech })(AddTechModal)
